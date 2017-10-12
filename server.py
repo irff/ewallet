@@ -38,19 +38,19 @@ def register():
                         'nama' : nama,
                         'nilai_saldo' : 0
                     })
-                    status = 1
+                    status_register = 1
                 else:
-                    status = -4
+                    status_register = -4
             else:
-                status = -99
+                status_register = -99
         else:
-            status = -2
+            status_register = -2
 
     else:
-        status = -99
+        status_register = -99
 
     response = {
-        'status' : status
+        'status_register' : status_register
     }
 
     return jsonify(response)
@@ -80,7 +80,7 @@ def get_saldo():
         nilai_saldo = -99
 
     response = {
-        'status' : nilai_saldo
+        'nilai_saldo' : nilai_saldo
     }
 
     return jsonify(response)
@@ -99,9 +99,6 @@ def quorum_check():
     ]
 
     neighbor_ips = []
-
-    # with open('list.json', "r") as listfile:
-    #     ips = json.load(listfile)
 
     ips = requests.get(LIST_URL).json()
 
@@ -126,15 +123,3 @@ def quorum_check():
             print("Can't connect to: {}", format(url))
 
     return available
-
-def get_count(name):
-    with open('data.json', "r+") as dbfile:
-        content = json.load(dbfile)
-        name_count = int(content.get(name, '0')) + 1
-
-        content[name] = name_count
-
-        dbfile.seek(0)
-        dbfile.truncate()
-        json.dump(content, dbfile)
-        return name_count
