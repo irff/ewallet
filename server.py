@@ -15,8 +15,13 @@ HALF_QUORUM = 4
 
 @app.route('/ewallet/ping', methods=['GET', 'POST'])
 def ping():
+    if request.method == 'POST':
+        pong = 1
+    else:
+        pong = -99
+
     response = {
-        "pong" : 1
+        "pong" : pong
     }
     return jsonify(response)
 
