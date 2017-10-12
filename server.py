@@ -115,15 +115,15 @@ def quorum_check():
     for neighbor_ip in neighbor_ips:
         url = 'http://' + neighbor_ip + '/ewallet/ping'
         try:
-            status = requests.get(url, timeout=0.5)
+            status = requests.post(url, json={}, timeout=0.5)
             status = status.json()
             if status['pong'] == 1:
                 available += 1
-                print "url {} available", url
+                print("url {} available".format(url))
             else:
-                print "url {} not available", url
+                print("url {} not available".format(url))
         except:
-            print "Can't connect to: {}", url
+            print("Can't connect to: {}", format(url))
 
     return available
 
