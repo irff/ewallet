@@ -92,8 +92,10 @@ def quorum_check():
         '1406579100',
         '1306398983',
         '1406543725',
-        '1406527620'
-        '1406527513'
+        '1406527620',
+        '1406527513',
+        '1406527532',
+        '1406543624'
     ]
 
     neighbor_ips = []
@@ -108,9 +110,10 @@ def quorum_check():
             if ip['npm'] == neighbor:
                 neighbor_ips.append(ip['ip'])
 
+
     available = 0
     for neighbor_ip in neighbor_ips:
-        url = 'http://' + neighbor_ip
+        url = 'http://' + neighbor_ip + '/ewallet/ping'
         try:
             status = requests.get(url, timeout=0.5)
             status = status.json()
