@@ -85,6 +85,7 @@ def get_saldo():
 
     return jsonify(response)
 
+
 def quorum_check():
     neighbors = [
         '1406543574',
@@ -115,11 +116,11 @@ def quorum_check():
             status = status.json()
             if status['pong'] == 1:
                 available += 1
-                "url {} available", url
+                print "url {} available", url
             else:
-                "url {} not available", url
+                print "url {} not available", url
         except:
-            "Can't connect to: {}", url
+            print "Can't connect to: {}", url
 
     return available
 
