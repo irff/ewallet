@@ -88,6 +88,7 @@ def register():
 
 @app.route('/ewallet/getSaldo', methods=['POST'])
 def get_saldo():
+    print("Getting saldo...")
     if request.method == 'POST':
         quorum_result = quorum_check()
         if quorum_result >= HALF_QUORUM:
@@ -116,6 +117,7 @@ def get_saldo():
 
 @app.route('/ewallet/getTotalSaldo', methods=['POST'])
 def get_total_saldo():
+    print("Starting method")
     if request.method == 'POST':
         print("Checking quorum")
         quorum_result = quorum_check()
