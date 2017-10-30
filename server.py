@@ -14,13 +14,12 @@ LIST_URL = 'http://152.118.31.2/list.php'
 
 ZERO_QUORUM = 0
 HALF_QUORUM = 5
-FULL_QUORUM = 8
+FULL_QUORUM = 5
 
 def get_neighbor_ips():
     neighbors = [
         '1406543574',
         '1406579100',
-        '1306398983',
         '1406543725',
         '1406527620',
         '1406527513',
@@ -129,10 +128,10 @@ def get_total_saldo():
             if user_id:
                 result = db.search(DB.user_id == user_id)
                 if len(result) == 0:
-                    print("[getTotalSaldo] Passing getTotalSaldo command to neighbor");
+                    print("[getTotalSaldo] Passing getTotalSaldo command to neighbor")
                     nilai_saldo = pass_get_total_saldo(user_id)
                 else:
-                    print("[getTotalSaldo] Getting saldo of all neighbors");
+                    print("[getTotalSaldo] Getting saldo of all neighbors")
                     total_saldo = get_neighbors_total_saldo(user_id)
                     if total_saldo >= 0:
                         nilai_saldo = total_saldo
@@ -186,6 +185,7 @@ def pass_get_total_saldo(user_id):
 # return -3 if can't connect to one of the host
 # return >=0 as the total saldo if successful
 def get_neighbors_total_saldo(user_id):
+    print("MASUK MASUK MASUK")
     total_saldo = 0
     neighbor_ips = get_neighbor_ips()
     for neighbor_ip in neighbor_ips:
@@ -213,7 +213,6 @@ def quorum_check():
     neighbors = [
         '1406543574',
         '1406579100',
-        '1306398983',
         '1406543725',
         '1406527620',
         '1406527513',
