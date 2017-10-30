@@ -117,7 +117,9 @@ def get_saldo():
 @app.route('/ewallet/getTotalSaldo', methods=['POST'])
 def get_total_saldo():
     if request.method == 'POST':
+        print("Checking quorum")
         quorum_result = quorum_check()
+        print("Finished checking quorum")
         if quorum_result >= FULL_QUORUM:
             req = request.get_json()
 
@@ -219,8 +221,10 @@ def quorum_check():
 
     neighbor_ips = []
 
+    print("[quorumCheck] getting list URL")
     ips = requests.get(LIST_URL, timeout=1).json()
-    
+    print("[quorumCheck] finished getting list URL")
+
     for ip in ips:
         for neighbor in neighbors:
             if ip['npm'] == neighbor:
