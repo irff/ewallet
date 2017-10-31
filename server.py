@@ -7,6 +7,7 @@ import requests
 import json
 
 app = Flask(__name__)
+
 db = TinyDB('db.json')
 DB = Query()
 
@@ -274,3 +275,6 @@ def get_total_saldo():
     }
 
     return jsonify(response)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=80, threaded=True)
