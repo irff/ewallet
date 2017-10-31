@@ -1,21 +1,20 @@
 from flask import Flask
 from flask import request, jsonify
-
 from tinydb import TinyDB, Query
-
 import requests
-import json
 
 app = Flask(__name__)
 
+# Use TinyDB
 db = TinyDB('db.json')
 DB = Query()
 
+# Initialize important constants
 LIST_URL = 'http://152.118.31.2/list.php'
 MAX_TRANSFER_AMOUNT = 1000000000
 ZERO_QUORUM = 0
 HALF_QUORUM = 5
-FULL_QUORUM = 5
+FULL_QUORUM = 8
 
 # ======== HELPER METHODS ========
 
@@ -78,7 +77,6 @@ def pass_get_total_saldo(user_id):
 # return -3 if can't connect to one of the host
 # return >=0 as the total saldo if successful
 def get_neighbors_total_saldo(user_id):
-    print("MASUK MASUK MASUK")
     total_saldo = 0
     neighbor_ips = get_neighbor_ips()
     for neighbor_ip in neighbor_ips:
@@ -175,7 +173,6 @@ def register():
 
 @app.route('/ewallet/getSaldo', methods=['POST'])
 def get_saldo():
-    print("Getting saldo...")
     if request.method == 'POST':
         quorum_result = quorum_check()
         if quorum_result >= HALF_QUORUM:
@@ -216,12 +213,11 @@ def trasfer():
                 if len(result) > 0:
                     nilai = int(nilai)
                     if(nilai >= 0 and nilai <= MAX_TRANSFER_AMOUNT):
-                        # do transfer
-                        status_transfer = 1
                         saldo_awal = result[0]['nilai_saldo']
                         db.update({
                             'nilai_saldo' : saldo_awal + nilai
                         }, DB.user_id == user_id)
+                        status_transfer = 1
                     else:
                         status_transfer = -5
                 else:
@@ -241,11 +237,8 @@ def trasfer():
 
 @app.route('/ewallet/getTotalSaldo', methods=['POST'])
 def get_total_saldo():
-    print("Starting method")
     if request.method == 'POST':
-        print("Checking quorum")
         quorum_result = quorum_check()
-        print("Finished checking quorum")
         if quorum_result >= FULL_QUORUM:
             req = request.get_json()
 
@@ -276,5 +269,6 @@ def get_total_saldo():
 
     return jsonify(response)
 
+# Run on localhost port 80, allow all connection, allow multi-threading
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80, threaded=True)
