@@ -21,13 +21,14 @@ FULL_QUORUM = 5
 # return IPs of neighbors corresponding to a list of IDs
 def get_neighbor_ips():
     neighbors = [
+        '1406543763',
         '1406543574',
         '1406579100',
+        '1306398983',
         '1406543725',
         '1406527620',
         '1406527513',
-        '1406527532',
-        '1406543624'
+        '1406572025',
     ]
 
     neighbor_ips = []
