@@ -82,10 +82,13 @@ def get_neighbors_total_saldo(user_id):
     for neighbor_ip in neighbor_ips:
         url = 'http://' + neighbor_ip + '/ewallet/getSaldo'
         try:
+            print("[getNeighborsSaldo] Trying to connect to: {}".format(neighbor_ip))
             response = requests.post(url, json={
                 'user_id': user_id
             }, timeout=1)
             response = response.json()
+            print("[getNeighborsSaldo] Finished connecting to: {}".format(neighbor_ip))
+
             if response['nilai_saldo'] >= 0:
                 print("[getNeighborsSaldo] Succesfully adding: {}, from {}".format(response['nilai_saldo'], neighbor_ip), )
                 nilai_saldo = response['nilai_saldo']
