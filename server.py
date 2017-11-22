@@ -10,7 +10,7 @@ db = TinyDB('db.json')
 DB = Query()
 
 # Initialize important constants
-LIST_URL = 'http://152.118.31.2/list.php'
+LIST_URL = 'http://172.17.0.55/list-demo'
 MAX_TRANSFER_AMOUNT = 1000000000
 ZERO_QUORUM = 0
 HALF_QUORUM = 2
@@ -21,6 +21,7 @@ NEIGHBORS = [
         '1406543580',
         '1406573356',
         '1306398983',
+        '1406579100',
     ]
 
 # ======== HELPER METHODS ========
@@ -231,7 +232,9 @@ def transfer_cabang():
             ip_tujuan = req.get('ip_tujuan', None)
 
             if user_id and nilai and ip_tujuan:
-                if ip_tujuan in NEIGHBORS:
+
+                neighbor_ips = get_neighbor_ips()
+                if ip_tujuan in neighbor_ips:
                     result = db.search(DB.user_id == user_id)
                     if len(result) > 0:
                         nilai = int(nilai)
